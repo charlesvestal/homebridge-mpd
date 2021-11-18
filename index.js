@@ -92,6 +92,7 @@ MpdAccessory.prototype.getVolume = function(callback) {
     else {
       var response = mpd.parseKeyValueMessage(msg);
       var volume = response.volume;
+      if (isNaN(volume)) volume = 0;
       accessory.log("volume is %s", volume);
       callback(null, Number(volume));
     }
