@@ -1,6 +1,6 @@
 {
   "name": "@reidcooper/homebridge-mpd",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "MPD plugin for homebridge: https://github.com/nfarina/homebridge",
   "license": "ISC",
   "keywords": [
