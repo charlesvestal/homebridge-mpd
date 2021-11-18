@@ -17,19 +17,19 @@ function MpdAccessory(log, config) {
   this.name = config["name"] || 'MPD';
   this.host = config["host"] || 'localhost';
   this.port = config["port"] || 6600;
-  
+
   this.client = mpd.connect({
     port: this.port,
     host: this.host,
   });
 
-  this.service = new Service.Switch(this.name);
+  this.service = new Service.Lightbulb(this.name);
 
   this.service
     .getCharacteristic(Characteristic.On)
     .on('get', this.getOn.bind(this))
     .on('set', this.setOn.bind(this));
-  
+
   this.service
     .addCharacteristic(new Characteristic.Brightness())
     .on('get', this.getVolume.bind(this))
@@ -53,13 +53,13 @@ MpdAccessory.prototype.getOn = function(callback) {
       accessory.log("player state: %s", response.state);
       callback(null, on);
     }
-    
+
   });
 }
 
 MpdAccessory.prototype.setOn = function(on, callback) {
   this.log("Setting power to " + on);
-  
+
   if (on) {
     this.client.sendCommand(cmd("play", []), function(err, msg) {
       if (err) {
@@ -67,7 +67,7 @@ MpdAccessory.prototype.setOn = function(on, callback) {
       }
       else {
         callback(null);
-      } 
+      }
     });
   }
   else {
@@ -77,7 +77,7 @@ MpdAccessory.prototype.setOn = function(on, callback) {
       }
       else {
         callback(null);
-      } 
+      }
     });
   }
 }
@@ -95,7 +95,7 @@ MpdAccessory.prototype.getVolume = function(callback) {
       accessory.log("volume is %s", volume);
       callback(null, Number(volume));
     }
-    
+
   });
 }
 
@@ -108,6 +108,6 @@ MpdAccessory.prototype.setVolume = function(volume, callback) {
     }
     else {
       callback(null);
-    }   
+    }
   });
 }
